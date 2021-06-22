@@ -1,10 +1,38 @@
-﻿@page
+﻿@page "/loginwithrecoverycode/"
 @model LoginWithRecoveryCodeModel
 @{
-    ViewData["Title"] = "Recovery code verification";
+    Layout = "/Views/Shared/Admin/_LoginLayout.cshtml";
+    ViewData["Title"] = "Xác minh mã khôi phục";
 }
 
-<h1>@ViewData["Title"]</h1>
+<div class="col-lg-6 d-none d-lg-block bg-login-image"></div>
+<div class="col-lg-6">
+    <div class="p-5">
+        <div class="text-center">
+            <h1 class="h4 text-gray-900 mb-4">@ViewData["Title"]</h1>
+        </div>
+        <p>
+            Bạn đã yêu cầu đăng nhập bằng mã khôi phục. Thông tin đăng nhập này sẽ không được ghi nhớ cho đến khi bạn cung cấp
+            mã ứng dụng xác thực khi đăng nhập hoặc tắt 2FA và đăng nhập lại.
+        </p>
+        <form class="user" method="post">
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="form-group">
+                <label class="form-control-label" asp-for="Input.RecoveryCode"></label>
+                <input asp-for="Input.RecoveryCode" autocomplete="off" class="form-control form-control-user" />
+                <span asp-validation-for="Input.RecoveryCode" class="text-danger"></span>
+            </div>
+            <button type="submit" class="btn btn-primary btn-user btn-block">Đăng nhập</button>
+            @*<div class="text-center">
+                <a asp-page="./LoginWith2fa" asp-route-returnUrl="@Model.ReturnUrl" class="small">Quay lại</a>
+            </div>*@
+            <a class="btn btn-outline-secondary btn-user btn-block" asp-page="./LoginWith2fa">Quay lại</a>
+
+        </form>
+    </div>
+</div>
+
+@*<h1>@ViewData["Title"]</h1>
 <hr />
 <p>
     You have requested to log in with a recovery code. This login will not be remembered until you provide
@@ -22,7 +50,7 @@
             <button type="submit" class="btn btn-primary">Log in</button>
         </form>
     </div>
-</div>
+</div>*@
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />

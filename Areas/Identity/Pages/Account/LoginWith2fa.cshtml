@@ -1,10 +1,45 @@
-﻿@page
+﻿@page "/loginwith2fa/"
 @model LoginWith2faModel
 @{
-    ViewData["Title"] = "Two-factor authentication";
+    Layout = "/Views/Shared/Admin/_LoginLayout.cshtml";
+    ViewData["Title"] = "Xác thực 2 yếu tố";
 }
 
-<h1>@ViewData["Title"]</h1>
+<div class="col-lg-6 d-none d-lg-block bg-login-image"></div>
+<div class="col-lg-6">
+    <div class="p-5">
+        <div class="text-center">
+            <h1 class="h4 text-gray-900 mb-4">@ViewData["Title"]</h1>
+        </div>
+        <p>Thông tin đăng nhập của bạn được bảo vệ bằng ứng dụng xác thực. Nhập mã xác thực của bạn bên dưới.</p>
+        <form asp-route-returnUrl="@Model.ReturnUrl" class="user" id="account" method="post">
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Input.TwoFactorCode"></label>
+                <input asp-for="Input.TwoFactorCode" class="form-control" autocomplete="off" />
+                <span asp-validation-for="Input.TwoFactorCode" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <div class="checkbox">
+                    <div class="custom-control custom-checkbox small">
+                        <input asp-for="Input.RememberMachine" class="custom-control-input" />
+                        <label asp-for="Input.RememberMachine" class="custom-control-label">@Html.DisplayNameFor(m => m.Input.RememberMachine)</label>
+                    </div>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary btn-user btn-block">Đăng nhập</button>
+            <a asp-page="./Login" class="btn btn-outline-secondary btn-user btn-block">Quay lại</a>
+
+            <hr>
+        </form>
+        <p>
+            Không có quyền truy cập vào thiết bị xác thực của bạn? Bạn có thể
+            <a id="recovery-code-login" asp-page="./LoginWithRecoveryCode" asp-route-returnUrl="@Model.ReturnUrl"> đăng nhập bằng mã khôi phục</a>.
+        </p>
+    </div>
+</div>
+
+@*<h1>@ViewData["Title"]</h1>
 <hr />
 <p>Your login is protected with an authenticator app. Enter your authenticator code below.</p>
 <div class="row">
@@ -34,7 +69,7 @@
 <p>
     Don't have access to your authenticator device? You can
     <a id="recovery-code-login" asp-page="./LoginWithRecoveryCode" asp-route-returnUrl="@Model.ReturnUrl">log in with a recovery code</a>.
-</p>
+</p>*@
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />

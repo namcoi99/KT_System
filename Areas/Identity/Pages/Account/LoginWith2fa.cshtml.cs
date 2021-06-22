@@ -33,12 +33,12 @@ namespace KT_System.Areas.Identity.Pages.Account
         public class InputModel
         {
             [Required]
-            [StringLength(7, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
+            [StringLength(7, ErrorMessage = "{0} phải có ít nhất {2} và nhiều nhất {1} ký tự.", MinimumLength = 6)]
             [DataType(DataType.Text)]
-            [Display(Name = "Authenticator code")]
+            [Display(Name = "Mã xác thực")]
             public string TwoFactorCode { get; set; }
 
-            [Display(Name = "Remember this machine")]
+            [Display(Name = "Nhớ thiết bị")]
             public bool RememberMachine { get; set; }
         }
 
@@ -49,7 +49,7 @@ namespace KT_System.Areas.Identity.Pages.Account
 
             if (user == null)
             {
-                throw new InvalidOperationException($"Unable to load two-factor authentication user.");
+                throw new InvalidOperationException($"Không thể tải người dùng xác thực hai yếu tố.");
             }
 
             ReturnUrl = returnUrl;
@@ -70,7 +70,7 @@ namespace KT_System.Areas.Identity.Pages.Account
             var user = await _signInManager.GetTwoFactorAuthenticationUserAsync();
             if (user == null)
             {
-                throw new InvalidOperationException($"Unable to load two-factor authentication user.");
+                throw new InvalidOperationException($"Không thể tải người dùng xác thực hai yếu tố.");
             }
 
             var authenticatorCode = Input.TwoFactorCode.Replace(" ", string.Empty).Replace("-", string.Empty);
@@ -79,18 +79,18 @@ namespace KT_System.Areas.Identity.Pages.Account
 
             if (result.Succeeded)
             {
-                _logger.LogInformation("User with ID '{UserId}' logged in with 2fa.", user.Id);
+                _logger.LogInformation("Người dùng có ID '{UserId}' đã đăng nhập bằng 2fa.", user.Id);
                 return LocalRedirect(returnUrl);
             }
             else if (result.IsLockedOut)
             {
-                _logger.LogWarning("User with ID '{UserId}' account locked out.", user.Id);
+                _logger.LogWarning("Người dùng có tài khoản ID '{UserId}' đã bị khóa.", user.Id);
                 return RedirectToPage("./Lockout");
             }
             else
             {
-                _logger.LogWarning("Invalid authenticator code entered for user with ID '{UserId}'.", user.Id);
-                ModelState.AddModelError(string.Empty, "Invalid authenticator code.");
+                _logger.LogWarning("Đã nhập mã xác thực không hợp lệ cho người dùng có ID '{UserId}'.", user.Id);
+                ModelState.AddModelError(string.Empty, "Mã xác thực không hợp lệ.");
                 return Page();
             }
         }
