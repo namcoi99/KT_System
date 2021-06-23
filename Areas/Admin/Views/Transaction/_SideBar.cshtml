@@ -1,4 +1,6 @@
-﻿@inject SignInManager<IdentityUser> SignInManager
+﻿@using Microsoft.AspNetCore.Identity
+@using KT_System.Models
+@inject SignInManager<IdentityUser> SignInManager
 @{
     var hasExternalLogins = (await SignInManager.GetExternalAuthenticationSchemesAsync()).Any();
 }
@@ -43,15 +45,15 @@
         <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Chức năng</h6>
-                <a class="collapse-item @ManageNavPages.IndexNavClass(ViewContext)" id="profile" asp-page="./Index">Hồ sơ</a>
-                <a class="collapse-item @ManageNavPages.EmailNavClass(ViewContext)" id="email" asp-page="./Email">Email</a>
-                <a class="collapse-item @ManageNavPages.ChangePasswordNavClass(ViewContext)" id="change-password" asp-page="./ChangePassword">Mật khẩu</a>
+                <a class="collapse-item" id="profile" asp-page="/Account/Manage/Index">Hồ sơ</a>
+                <a class="collapse-item" id="email" asp-page="/Account/Manage/Email">Email</a>
+                <a class="collapse-item" id="change-password" asp-page="/Account/Manage/ChangePassword">Mật khẩu</a>
                 @if (hasExternalLogins)
                 {
-                    <a id="external-login" class="collapse-item @ManageNavPages.ExternalLoginsNavClass(ViewContext)" asp-page="./ExternalLogins">External Logins</a>
+                    <a id="external-login" class="collapse-item" asp-page="/Account/Manage/ExternalLogins">External Logins</a>
                 }
-                <a class="collapse-item @ManageNavPages.TwoFactorAuthenticationNavClass(ViewContext)" id="two-factor" asp-page="./TwoFactorAuthentication">Xác thực hai yếu tố</a>
-                <a class="collapse-item @ManageNavPages.PersonalDataNavClass(ViewContext)" id="personal-data" asp-page="./PersonalData">Dữ liệu cá nhân</a>
+                <a class="collapse-item" id="two-factor" asp-page="/Account/Manage/TwoFactorAuthentication">Xác thực hai yếu tố</a>
+                <a class="collapse-item" id="personal-data" asp-page="/Account/Manage/PersonalData">Dữ liệu cá nhân</a>
             </div>
         </div>
     </li>
@@ -64,8 +66,8 @@
         </a>
         <div id="collapsePhanquyen" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-                <a class="collapse-item" asp-page="/Role/Index" asp-area="Admin">Vai trò - Role</a>
-                <a class="collapse-item" asp-page="/Role/User" asp-area="Admin">Gán vai trò (phân quyền)</a>
+                <a class="collapse-item" asp-area="Admin" asp-page="/Role/Index">Vai trò - Role</a>
+                <a class="collapse-item" asp-area="Admin" asp-page="/Role/User">Gán vai trò (phân quyền)</a>
             </div>
         </div>
     </li>
@@ -86,8 +88,8 @@
         </a>
         <div id="collapseGiaodich" class="collapse show" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-                <a class="collapse-item" asp-action="Index" asp-area="Admin">Danh sách giao dịch</a>
-                <a class="collapse-item" asp-page="/" asp-area="Admin">Tạo bút toán</a>
+                <a class="collapse-item" asp-controller="Transaction" asp-action="Index" asp-area="Admin">Danh sách giao dịch</a>
+                <a class="collapse-item" asp-controller="Transaction" asp-action="Index" asp-area="Admin">Tạo bút toán</a>
             </div>
         </div>
     </li>

@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using KT_System.Models;
 
 namespace KT_System.Data
 {
@@ -12,5 +13,6 @@ namespace KT_System.Data
             : base(options)
         {
         }
+        public DbSet<KT_System.Models.Transaction> Transaction { get; set; }
     }
 }
