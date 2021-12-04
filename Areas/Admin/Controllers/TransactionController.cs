@@ -10,6 +10,9 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using System.Threading.Tasks;
+using System.Text;
+using X.PagedList;
 
 namespace KT_System.Areas.Admin.Controllers
 {
@@ -22,7 +25,7 @@ namespace KT_System.Areas.Admin.Controllers
         {
             _config = config;
         }
-        public IActionResult Index(DateTime? FromDate)
+        public IActionResult Index(DateTime? FromDate, int? page)
         {
             var txViewModel = new TransactionViewModel
             {
@@ -31,6 +34,7 @@ namespace KT_System.Areas.Admin.Controllers
 
             if (FromDate.HasValue)
             {
+                ViewData["FromDate"] = FromDate;
                 using var httpClient = new HttpClient();
                 httpClient.BaseAddress = new Uri(_config["HISCloud:Uri"]);
                 httpClient.DefaultRequestHeaders.Add("Authorization", _config["HISCloud:Authorization"]);
@@ -52,7 +56,39 @@ namespace KT_System.Areas.Admin.Controllers
                     ModelState.AddModelError(string.Empty, "Server error occured!!!");
                 }
             }
-            return View(txViewModel);
+            int pageSize = 3;
+            int pageNumber = (page ?? 1);
+
+            return View(txViewModel.Transactions.ToPagedList(pageNumber, pageSize));
         }
+
+        //public Task<IActionResult> Receive(string id)
+        //{
+        //    using var httpClient = new HttpClient();
+        //    httpClient.BaseAddress = new Uri(_config["HISCloud:Uri"]);
+        //    httpClient.DefaultRequestHeaders.Add("Authorization", _config["HISCloud:Authorization"]);
+        //    //Mark transaction with id as received
+        //    var marked = new
+        //    {
+        //        id = new[] { },
+        //        status = 0
+        //    };
+
+        //    string rawString = JsonConvert.SerializeObject(marked);
+        //    var content = new StringContent(rawString, Encoding.UTF8, "application/json");
+        //    var responseTask = httpClient.PostAsync("ketoan_amaz-send", content);
+        //    responseTask.Wait();
+        //    var result = responseTask.Result;
+        //    if (result.IsSuccessStatusCode)
+        //    {
+        //        var readJob = result.Content.ReadAsStringAsync();
+        //        readJob.Wait();
+        //    }
+        //    else
+        //    {
+
+        //    }
+        //    return;
+        //}
     }
 }

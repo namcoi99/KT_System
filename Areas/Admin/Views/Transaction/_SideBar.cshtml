@@ -9,7 +9,7 @@
 <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
     <!-- Sidebar - Brand -->
-    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="#">
+    <a class="sidebar-brand d-flex align-items-center justify-content-center" asp-action="Index" asp-controller="Home" asp-area="">
         <div class="sidebar-brand-icon">
             <i class="fas fa-chart-line"></i>
         </div>
@@ -37,34 +37,34 @@
 
     <!-- Nav Item - Pages Collapse Menu -->
     <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUserManage"
            aria-expanded="true" aria-controls="collapseTwo">
             <i class="fas fa-fw fa-cog"></i>
             <span>Tài khoản cá nhân</span>
         </a>
-        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+        <div id="collapseUserManage" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Chức năng</h6>
-                <a class="collapse-item" id="profile" asp-page="/Account/Manage/Index">Hồ sơ</a>
-                <a class="collapse-item" id="email" asp-page="/Account/Manage/Email">Email</a>
-                <a class="collapse-item" id="change-password" asp-page="/Account/Manage/ChangePassword">Mật khẩu</a>
+                <a class="collapse-item" id="profile" asp-area="Identity" asp-page="/Account/Manage/Index">Hồ sơ</a>
+                <a class="collapse-item" id="email" asp-area="Identity" asp-page="/Account/Manage/Email">Email</a>
+                <a class="collapse-item" id="change-password" asp-area="Identity" asp-page="/Account/Manage/ChangePassword">Mật khẩu</a>
                 @if (hasExternalLogins)
                 {
-                    <a id="external-login" class="collapse-item" asp-page="/Account/Manage/ExternalLogins">External Logins</a>
+                    <a id="external-login" class="collapse-item" asp-area="Identity" asp-page="/Account/Manage/ExternalLogins">External Logins</a>
                 }
-                <a class="collapse-item" id="two-factor" asp-page="/Account/Manage/TwoFactorAuthentication">Xác thực hai yếu tố</a>
-                <a class="collapse-item" id="personal-data" asp-page="/Account/Manage/PersonalData">Dữ liệu cá nhân</a>
+                <a class="collapse-item" id="two-factor" asp-area="Identity" asp-page="/Account/Manage/TwoFactorAuthentication">Xác thực hai yếu tố</a>
+                <a class="collapse-item" id="personal-data" asp-area="Identity" asp-page="/Account/Manage/PersonalData">Dữ liệu cá nhân</a>
             </div>
         </div>
     </li>
 
-    <!-- Nav Item - Quản lý phân quyền người dùng -->
+    <!-- Nav Item - Authorization -->
     <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePhanquyen" aria-expanded="true" aria-controls="collapseTwo">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseAuthorization" aria-expanded="true" aria-controls="collapseTwo">
             <i class="fas fa-user-cog"></i>
             <span>Phân quyền</span>
         </a>
-        <div id="collapsePhanquyen" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+        <div id="collapseAuthorization" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <a class="collapse-item" asp-area="Admin" asp-page="/Role/Index">Vai trò - Role</a>
                 <a class="collapse-item" asp-area="Admin" asp-page="/Role/User">Gán vai trò (phân quyền)</a>
@@ -82,17 +82,20 @@
 
     <!-- Nav Item - Quản lý giao dịch -->
     <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseGiaodich" aria-expanded="true" aria-controls="collapseTwo">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTransaction" aria-expanded="true" aria-controls="collapseTwo">
             <i class="fas fa-file-alt"></i>
             <span>Quản lý giao dịch</span>
         </a>
-        <div id="collapseGiaodich" class="collapse show" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+        <div id="collapseTransaction" class="collapse show" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-                <a class="collapse-item" asp-controller="Transaction" asp-action="Index" asp-area="Admin">Danh sách giao dịch</a>
+                <a class="collapse-item active" asp-controller="Transaction" asp-action="Index" asp-area="Admin">Danh sách giao dịch</a>
                 <a class="collapse-item" asp-controller="Transaction" asp-action="Index" asp-area="Admin">Tạo bút toán</a>
             </div>
         </div>
     </li>
+
+    <!-- Divider -->
+    <hr class="sidebar-divider d-none d-md-block">
 
     <!-- Sidebar Toggler (Sidebar) -->
     <div class="text-center d-none d-md-inline">

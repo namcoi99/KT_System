@@ -1,4 +1,7 @@
-﻿@model KT_System.Models.TransactionViewModel
+﻿@using X.PagedList.Mvc.Core
+@using X.PagedList
+@model IPagedList<KT_System.Models.Transaction>
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
 @{
     ViewData["Title"] = "Danh sách giao dịch";
     Layout = "_Layout";
@@ -12,13 +15,13 @@
     <form>
         <p>
             <input type="datetime-local" name="FromDate" />
-            <input type="submit" value="Get Transactions" />
+            <button type="submit" class="btn btn-primary">Lấy giao dịch</button>
         </p>
     </form>
     <!-- DataTales Example -->
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6>
+            <h6 class="m-0 font-weight-bold text-primary">Tất cả giao dịch @ViewData["FromDate"]</h6>
         </div>
         <div class="card-body">
             <div class="table-responsive">
@@ -26,55 +29,55 @@
                     <thead>
                         <tr>
                             <th>
-                                @Html.DisplayNameFor(model => model.Transactions.ToList()[0].PhieuThuId)
+                                @Html.DisplayNameFor(model => model.ToList()[0].PhieuThuId)
                             </th>
                             <th>
-                                @Html.DisplayNameFor(model => model.Transactions.ToList()[0].TenDichVu)
+                                @Html.DisplayNameFor(model => model.ToList()[0].TenDichVu)
                             </th>
                             <th>
-                                @Html.DisplayNameFor(model => model.Transactions.ToList()[0].MaDichVu)
+                                @Html.DisplayNameFor(model => model.ToList()[0].MaDichVu)
                             </th>
                             <th>
-                                @Html.DisplayNameFor(model => model.Transactions.ToList()[0].HoTenKhachHang)
+                                @Html.DisplayNameFor(model => model.ToList()[0].HoTenKhachHang)
                             </th>
                             <th>
-                                @Html.DisplayNameFor(model => model.Transactions.ToList()[0].MaKhachHang)
+                                @Html.DisplayNameFor(model => model.ToList()[0].MaKhachHang)
                             </th>
                             <th>
-                                @Html.DisplayNameFor(model => model.Transactions.ToList()[0].SoTien)
+                                @Html.DisplayNameFor(model => model.ToList()[0].SoTien)
                             </th>
                             <th>
-                                @Html.DisplayNameFor(model => model.Transactions.ToList()[0].NguoiNopTien)
+                                @Html.DisplayNameFor(model => model.ToList()[0].NguoiNopTien)
                             </th>
                             <th>
-                                @Html.DisplayNameFor(model => model.Transactions.ToList()[0].IsPhieuChi)
+                                @Html.DisplayNameFor(model => model.ToList()[0].IsPhieuChi)
                             </th>
                             <th>
-                                @Html.DisplayNameFor(model => model.Transactions.ToList()[0].MaCanBoChiDinh)
+                                @Html.DisplayNameFor(model => model.ToList()[0].MaCanBoChiDinh)
                             </th>
                             <th>
-                                @Html.DisplayNameFor(model => model.Transactions.ToList()[0].MaKhoaChiDinh)
+                                @Html.DisplayNameFor(model => model.ToList()[0].MaKhoaChiDinh)
                             </th>
                             <th>
-                                @Html.DisplayNameFor(model => model.Transactions.ToList()[0].MaPhongChiDinh)
+                                @Html.DisplayNameFor(model => model.ToList()[0].MaPhongChiDinh)
                             </th>
                             <th>
-                                @Html.DisplayNameFor(model => model.Transactions.ToList()[0].MaCanBoXuLy)
+                                @Html.DisplayNameFor(model => model.ToList()[0].MaCanBoXuLy)
                             </th>
                             <th>
-                                @Html.DisplayNameFor(model => model.Transactions.ToList()[0].MaKhoaXuLy)
+                                @Html.DisplayNameFor(model => model.ToList()[0].MaKhoaXuLy)
                             </th>
                             <th>
-                                @Html.DisplayNameFor(model => model.Transactions.ToList()[0].MaPhongXuLy)
+                                @Html.DisplayNameFor(model => model.ToList()[0].MaPhongXuLy)
                             </th>
                             <th>
-                                @Html.DisplayNameFor(model => model.Transactions.ToList()[0].NgayTao)
+                                @Html.DisplayNameFor(model => model.ToList()[0].NgayTao)
                             </th>
                             <th></th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach (var item in Model.Transactions)
+                        @foreach (var item in Model)
                         {
                             <tr>
                                 <td>
@@ -123,14 +126,19 @@
                                     @Html.DisplayFor(modelItem => item.NgayTao)
                                 </td>
                                 <td>
-                                    @Html.ActionLink("Tiếp nhận", "Edit", new { id = item.Id })
+                                    @*@Html.ActionLink("Tiếp nhận", "Edit", new { id = item.Id })*@
+                                    <button class="btn btn-block btn-primary" asp-controller="Transaction" asp-action="Receive" asp-route-id="@item.PhieuThuId">Tiếp nhận</button>
                                 </td>
                             </tr>
                         }
                     </tbody>
                 </table>
+                <br />
+                Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+                <div class="pull-right">
+                    @Html.PagedListPager(Model, page => Url.Action("Index", new { FromDate = ViewData["FromDate"], page }))
+                </div>
             </div>
-        </div>
     </div>
 
 </div>

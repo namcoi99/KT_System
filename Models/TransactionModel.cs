@@ -50,9 +50,13 @@ namespace KT_System.Models
         }
     }
 
+    public class EntryModel
+    {
+
+    }
+
     public class TransactionViewModel
     {
         public IEnumerable<Transaction> Transactions { get; set; }
-        public DateTime FromDate { get; set; }
     }
 }
